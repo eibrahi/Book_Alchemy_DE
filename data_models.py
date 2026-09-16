@@ -28,7 +28,7 @@ class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     isbn = db.Column(db.String)
     title = db.Column(db.String)
-    publication_year = db.Column(db.Date)
+    publication_year = db.Column(db.Integer)
     author_id = db.Column(db.Integer, db.ForeignKey('authors.id'))
 
     author = db.relationship('Author', backref='books')
