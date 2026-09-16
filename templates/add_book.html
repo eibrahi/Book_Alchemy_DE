@@ -1,33 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  </head>
-  <body>
 
-  <form action="/add_book" method="POST">
-  <!-- Add the form here -->
-    <label for="title">Title:</label>
-      <input type="text" id="title" name="title" required><br><br>
+    <title>Add Book · My Library</title>
 
-    <label for="isbn">ISBN:</label>
-      <input type="text" id="isbn" name="isbn" required><br><br>
+    <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/style.css') }}"
+    >
 
-    <label for="publication_year">Year of Publication:</label>
-      <input type="text" id="publication_year" name="publication_year" required><br><br>
+</head>
 
-    <label for="author_id">Author:</label>
-     <select id="author_id" name="author_id" required>
-        <option value="">-- Choose Author --</option>
-        {% for author in authors %}
-            <option value="{{ author.id }}">{{ author.name }}</option>
-        {% endfor %}
-    </select><br><br>
 
-    <input type="submit" value="Add Book">
-  </form>
+<body>
 
-  </body>
+<!-- Navigation -->
+
+<nav class="navbar">
+
+    <div class="nav-container">
+
+        <a href="/" class="logo">
+            📚 My Library
+        </a>
+
+        <div class="nav-links">
+
+            <a href="/" class="nav-link">
+                Library
+            </a>
+
+            <a href="/add_book" class="nav-link active">
+                + Add Book
+            </a>
+
+            <a href="/add_author" class="nav-link">
+                + Add Author
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- Main -->
+
+<main class="form-page">
+
+    <div class="form-container">
+
+
+        <!-- Page Header -->
+
+        <div class="form-header">
+
+            <div class="form-icon">
+                📖
+            </div>
+
+            <div>
+
+                <p class="eyebrow">
+                    LIBRARY
+                </p>
+
+                <h1>
+                    Add a new book
+                </h1>
+
+                <p>
+                    Add a book to your personal collection.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Form Card -->
+
+        <div class="form-card">
+
+            <form action="/add_book" method="POST">
+
+
+                <!-- Title -->
+
+                <div class="form-group">
+
+                    <label for="title">
+                        Book Title
+                    </label>
+
+                    <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            placeholder="e.g. The Great Gatsby"
+                            required
+                    >
+
+                </div>
+
+
+                <!-- ISBN -->
+
+                <div class="form-group">
+
+                    <label for="isbn">
+                        ISBN
+                    </label>
+
+                    <input
+                            type="text"
+                            id="isbn"
+                            name="isbn"
+                            placeholder="e.g. 9780743273565"
+                            required
+                    >
+
+                    <small>
+                        Enter the book's ISBN number.
+                    </small>
+
+                </div>
+
+
+                <!-- Publication Year -->
+
+                <div class="form-group">
+
+                    <label for="publication_year">
+                        Year of Publication
+                    </label>
+
+                    <input
+                            type="text"
+                            id="publication_year"
+                            name="publication_year"
+                            placeholder="e.g. 1925"
+                            required
+                    >
+
+                </div>
+
+
+                <!-- Author -->
+
+                <div class="form-group">
+
+                    <label for="author_id">
+                        Author
+                    </label>
+
+                    <select
+                            id="author_id"
+                            name="author_id"
+                            required
+                    >
+
+                        <option value="">
+                            -- Choose Author --
+                        </option>
+
+                        {% for author in authors %}
+
+                            <option value="{{ author.id }}">
+                                {{ author.name }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <!-- Buttons -->
+
+                <div class="form-actions">
+
+                    <a href="/" class="secondary-button">
+                        Cancel
+                    </a>
+
+                    <button
+                            type="submit"
+                            class="primary-button"
+                    >
+                        + Add Book
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    <p>
+        © 2026 My Library · Built with Flask
+    </p>
+
+</footer>
+
+</body>
+
 </html>
+

@@ -1,22 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  </head>
-  <body>
 
-  <form action="/add_author" method="POST">
-  <label for="name">Author Name:</label> 
-  <input type="text" id="name" name="name" required><br><br>
-  
-  <label for="birthdate">Birthdate:</label> 
-  <input type="date" id="birthdate" name="birthdate" required><br><br> 
-  <label for="date_of_death">Date of Death:</label> 
-  <input type="date" id="date_of_death" name="date_of_death"><br><br>
-  <input type="submit" value="Add Author"> 
-  </form>
+    <title>Add Author · My Library</title>
 
-  </body>
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+    <!-- Navigation -->
+
+    <nav class="navbar">
+
+        <div class="nav-container">
+
+            <a href="/" class="logo">
+                📚 My Library
+            </a>
+
+            <div class="nav-links">
+
+                <a href="/" class="nav-link">
+                    Library
+                </a>
+
+                <a href="/add_book" class="nav-link">
+                    + Add Book
+                </a>
+
+                <a href="/add_author" class="nav-link active">
+                    + Add Author
+                </a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Main -->
+
+    <main class="form-page">
+
+        <div class="form-container">
+
+
+            <!-- Header -->
+
+            <div class="form-header">
+
+                <div class="form-icon">
+                    ✍️
+                </div>
+
+                <div>
+
+                    <p class="eyebrow">
+                        LIBRARY
+                    </p>
+
+                    <h1>
+                        Add a new author
+                    </h1>
+
+                    <p>
+                        Create an author that you can assign to books.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Form -->
+
+            <div class="form-card">
+
+                <form action="/add_author" method="POST">
+
+
+                    <!-- Name -->
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Author Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="e.g. George Orwell"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Birthdate -->
+
+                    <div class="form-group">
+
+                        <label for="birthdate">
+                            Birthdate
+                        </label>
+
+                        <input
+                            type="date"
+                            id="birthdate"
+                            name="birthdate"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Date of Death -->
+
+                    <div class="form-group">
+
+                        <label for="date_of_death">
+                            Date of Death
+                        </label>
+
+                        <input
+                            type="date"
+                            id="date_of_death"
+                            name="date_of_death"
+                        >
+
+                        <small>
+                            Leave empty if the author is still alive.
+                        </small>
+
+                    </div>
+
+
+                    <!-- Buttons -->
+
+                    <div class="form-actions">
+
+                        <a href="/" class="secondary-button">
+                            Cancel
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="primary-button"
+                        >
+                            + Add Author
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            © 2026 My Library · Built with Flask
+        </p>
+
+    </footer>
+
+</body>
+
 </html>
+
