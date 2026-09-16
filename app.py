@@ -1,11 +1,14 @@
 from operator import or_
 
-from flask import Flask, render_template, request
+import flask
+from flask import Flask, render_template, request, redirect, flash
 from data_models import db, Author, Book
 from datetime import datetime
 import os
 
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
+
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(basedir, 'data/library.sqlite')}"
@@ -13,13 +16,46 @@ db.init_app(app)
 
 
 @app.route('/')
-def hello_world():
+def home():
     """
     Zeigt die Startseite mit allen Büchern aus der Datenbank.
     """
     books = db.session.execute(db.select(Book)).scalars().all()
     return render_template('home.html', books=books)
 
+
+@app.route('/book/<int:book_id>/delete', methods=['POST'])
+def delete_book(book_id):
+    """
+    Löscht ein Buch anhand seiner ID aus der Datenbank.
+    Nach erfolgreicher Löschung wird der Benutzer zur Startseite
+    weitergeleitet und eine Erfolgsmeldung angezeigt.
+    """
+
+    book = db.session.execute(
+        db.select(Book).where(Book.id == book_id)
+    ).scalar_one_or_none()
+
+    if not book:
+        flash("Buch wurde nicht gefunden.")
+        return redirect("/")
+
+    author = book.author
+
+    db.session.delete(book)
+    db.session.commit()
+
+    remaining_books = db.session.execute(
+        db.select(Book).where(Book.author == author)
+    ).scalars().all()
+
+    if not remaining_books:
+        db.session.delete(author)
+        db.session.commit()
+
+    flash("Buch erfolgreich gelöscht!")
+
+    return redirect("/")
 
 @app.route('/sort', methods=['GET'])
 def sort():

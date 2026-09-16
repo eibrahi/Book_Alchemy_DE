@@ -8,6 +8,15 @@
 <body>
 
     <h1>My Library</h1>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
     <!-- Suchformular -->
     <form action="/search" method="GET">
         <input type="text" name="query" placeholder="Search for a book or Author..." >
@@ -46,6 +55,11 @@
                 alt="Cover of {{ book.title }}"
                 width="150"
             >
+
+        <form action="/book/{{ book.id }}/delete" method="POST">
+            <button type="submit">Buch löschen</button>
+        </form>
+
         </div>
 
     {% endfor %}
