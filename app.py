@@ -1,3 +1,5 @@
+from operator import or_
+
 from flask import Flask, render_template, request
 from data_models import db, Author, Book
 from datetime import datetime
@@ -47,6 +49,39 @@ def sort():
         books = Book.query.all()
 
     return render_template('home.html', books=books)
+
+@app.route('/search', methods=['GET'])
+def search():
+    """
+    Durchsucht die Bücher nach dem eingegebenen Suchbegriff.
+    Dabei werden sowohl der Buchtitel als auch der Name des Autors durchsucht.
+
+    Gibt die gefundenen Bücher aus oder eine Meldung zurück,
+    wenn keine passenden Bücher gefunden wurden.
+    """
+    query = request.args.get('query')
+
+    books = db.session.execute(
+        db.select(Book)
+        .join(Book.author)
+        .where(
+            or_(Book.title.like(f'%{query}%'),
+                 Author.name.like(f'%{query}%')
+                )
+        )
+    ).scalars().all()
+
+    if not books:
+        return render_template(
+            'home.html',
+            books=[],
+            massage=f"Keine Bücher für '{query} gefunden."
+        )
+    return render_template(
+        'home.html',
+        books=books,
+    )
+
 
 
 @app.route('/add_author', methods=['GET', 'POST'])
